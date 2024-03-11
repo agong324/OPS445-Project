@@ -29,7 +29,7 @@
 
 			    <nav class="navbar navbar-expand-sm navbar-light bg-light">
 			    <div class="container">
-			        <a href="{% url 'core:home' %}" class="navbar-brand">Django blog</a>
+			        <a href="{% url 'core:home' %}" class="navbar-brand">OPS445 Django blog</a>
 				<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
 				        <span class="navbar-toggler-icon"></span>
 				</button>
@@ -39,7 +39,13 @@
 					 </div>
 				  </div>
 			   </div>
-			    </nav>
+			   </nav>
+			    {% for message in messages %}
+			    <div class="alert alert-success alert-dismissible fade show">
+				    {{ message }}
+				    <button type="button" class="close" data-dismiss="alert">&times;</button>
+			    </div>
+			    {% endfor %}
 			    {% block content %}
 			    {% endblock content %}
 	</body>
