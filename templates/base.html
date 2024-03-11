@@ -12,21 +12,6 @@
 	</head>
 
 	<body>
-		<nav class ="navbar navbar-expand-sm navbar-light bg-light">
-		<div class="container">
-			<a href="{% url 'core:home' %}" class="navbar-brand">Django blog</a>
-			<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-				<div class="navbar-nav">
-					<a href="{% url 'core:home' %}" class="nav-item nav-link">Home</a>
-				</div>
-			</div>
-		</div>
-		</nav>
-		{% block content %}
-		{% endblock content %}
 
 
 		  <h1>Hello World !</h1>
@@ -41,5 +26,21 @@
 			  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
 				      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 				          crossorigin="anonymous"></script>
+
+			    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+			    <div class="container">
+			        <a href="{% url 'core:home' %}" class="navbar-brand">Django blog</a>
+				<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+				        <span class="navbar-toggler-icon"></span>
+				</button>
+				  <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+					<div class="navbar-nav">
+					  <a href="{% url 'core:home' %}" class="nav-item nav-link">Home</a>
+					 </div>
+				  </div>
+			   </div>
+			    </nav>
+			    {% block content %}
+			    {% endblock content %}
 	</body>
 </html>

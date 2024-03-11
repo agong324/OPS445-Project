@@ -9,7 +9,7 @@ class PostAdmin(admin.ModelAdmin):
         prepopulated_fields = {'slug': ('title',)} # this create the slug field from the title field
         autocomplete_fields = ('tags',)
 
-        admin.site.register(Post, PostAdmin)
+admin.site.register(Post, PostAdmin)
 
  # TagAdmin must define "search_fields", because it's referenced by PostAdmin.autocomplete_fields
 class TagAdmin(admin.ModelAdmin):
