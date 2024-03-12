@@ -35,13 +35,26 @@
 				</button>
 				  <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
 					<div class="navbar-nav">
-					  <a href="{% url 'core:home' %}" class="nav-item nav-link">Home</a>
-					 </div>
+					  <a href="{% url 'core:home' %}" 
+					   class="nav-item nav-link {% if request.path == '/' %}activate{% endif %}">Home</a>
 				  </div>
+				  {% if request.user.is_authenticated %}
+				  <div class="navbar-nav ml-auto">
+					  <a href="#" class="nav-item nav-link">Profile</a>
+					  <a href="{% url 'users:logout' %}" class="nav-item nav-link">Log out</a>
+				  </div>
+				  {% else %}
+				  <div class="navbar-nav ml-auto">
+					  <a href="{% url 'users:login' %}"
+					     class="nav-item nav-link {% if request.path == '/users/login/' %}activate{% endif %}"Log in</a>
+					  <a href="{% url 'users:signup' %}"
+					     class="nav-item nav-link {% if request.path == '/users/signup/' %}activate{% endif %}">Sign up</a>
+				  </div>
+				  {% endif %}
 			   </div>
 			   </nav>
 			    {% for message in messages %}
-			    <div class="alert alert-success alert-dismissible fade show">
+			    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}  alert-dismissible fade show">
 				    {{ message }}
 				    <button type="button" class="close" data-dismiss="alert">&times;</button>
 			    </div>

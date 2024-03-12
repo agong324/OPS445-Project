@@ -9,3 +9,7 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email")
+
+class LoginForm(forms.Form):
+    email = forms.CharField()
+    password = forms.CharField()
