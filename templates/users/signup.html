@@ -18,6 +18,7 @@
           {% if form.username.errors %}
           <div class="invalid-feedback">{{ form.username.errors }}</div>
           {% endif %}
+	  <small class="text-muted">{{ form.username.help_text }}</small>
         </div>
        <div class="form-group">
 	  {{ form.email.label_tag }}
