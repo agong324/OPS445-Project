@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+
 from .forms import SignUpForm, LoginForm
+from .models import User, Profile
 
 # Create your views here.
 def signup(request):
@@ -38,3 +41,9 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return redirect(reverse('users:login'))
+
+@login_required
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=user)
+    return render(request, 'users/profile.html', {'profile': profile, 'user': user})
