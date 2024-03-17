@@ -13,5 +13,5 @@ def signup(request):
             messages.success(request, "You are now registered!")
             return redirect('core:home')
     else:
-        form = SignupForm()
+        form = SignUpForm()
     return render(request, 'users/signup.html', {'form': form})
