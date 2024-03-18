@@ -1,8 +1,10 @@
 # users/tests/test_views.py
-from django.test import TestCase
+import tempfile
+from PIL import Image
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from ..models import User
+from ..models import User, Profile
 from ..forms import SignUpForm
 
 
@@ -104,3 +106,60 @@ class ProfileViewTest(TestCase):
         self.assertEqual(response.context["user"], self.user2)
         # Check we got the profile of the user 'user2'
         self.assertEqual(response.context["profile"], self.user2.profile)
+
+
+class EditProfileViewTest(TestCase):
+    def setUp(self):
+        self.user1 = User.objects.create_user(
+            username='user1', email='user1@gmail.com', password='1234'
+        )
+
+    def test_edit_profile_returns_200(self):
+        self.client.login(email='user1@gmail.com', password='1234')
+        response = self.client.get(reverse('users:edit_profile'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_profile_redirects_if_not_logged_in(self):
+        response = self.client.get(reverse('users:edit_profile'))
+        self.assertRedirects(
+            response, '/users/login/?next=/users/edit-profile/')
+
+    def test_edit_profile_change_username(self):
+        self.client.login(email='user1@gmail.com', password='1234')
+        response = self.client.post(reverse('users:edit_profile'), {
+            'username': 'user2',
+            'about_me': 'Hello world'
+        })
+
+        # Check that the username 'user1' becomes 'user2'
+        user2 = User.objects.filter(email='user1@gmail.com')[0]
+        self.assertEqual(user2.username, 'user2')
+
+    # override settings for media dir to avoid filling up your disk
+    @override_settings(MEDIA_ROOT=tempfile.gettempdir())
+    def test_upload_image(self):
+        login = self.client.login(email='user1@gmail.com', password='1234')
+        image = self._create_image()
+        profile = Profile.objects.get(user=self.user1)
+
+        # check that no image exists before the request
+        self.assertFalse(bool(profile.image))
+
+        with open(image.name, 'rb') as f:
+            response = self.client.post(reverse('users:edit_profile'), {
+                'username': 'user1',
+                'about_me': 'Hello world',
+                'image': f
+            })
+        profile.refresh_from_db()
+
+        self.assertTrue(bool(profile.image))
+
+    def _create_image(self):
+        """Create a temporary image to test with it"""
+
+        f = tempfile.NamedTemporaryFile(delete=False, suffix='.png')
+        image = Image.new('RGB', (200, 200), 'white')
+        image.save(f, 'PNG')
+
+        return f
