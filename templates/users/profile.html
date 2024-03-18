@@ -13,12 +13,14 @@
         {% else %}
         <img class="card-img-top col-sm-3 col-4 my-3" src="{% static 'img/avatar.svg' %}" alt="{{ user.username }}">
         {% endif %}
-	<p><a href="{% url 'users:edit_profile' %}">Edit Profile</a></p>
         <div class="card-body col-9">
           <h2 class="card-title my-3">{{ user.username }}</h2>
           <p>Last login on: {{ user.last_login }}</p>
           <p class="card-text">{{ user.profile.about_me }}</p>
         </div>
+	<p><a href="{% url 'users:edit_profile' %}">Edit Profile</a></p>
+	<div class="card-body col-9"></div>
+	<p><a href="{% url 'users:password_change' %}">Change Password</a></p>
       </div>
     </div>
   </div>
