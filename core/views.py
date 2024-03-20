@@ -5,7 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from .models import Post
+
+from .models import Post, Comment
+from .forms import CommentForm
 
 # Create your views here.
 class HomeView(ListView):
@@ -74,3 +76,48 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return self.model.objects.filter(author=self.request.user)
+
+
+class PostView(DetailView):
+    model = Post
+    template_name = "core/post.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs["pk"]
+        slug = self.kwargs["slug"]
+
+        form = CommentForm()
+        post = get_object_or_404(Post, pk=pk, slug=slug)
+        comments = post.comment_set.all()
+
+        context['post'] = post
+        context['comments'] = comments
+        context['form'] = form
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(request.POST)
+        self.object = self.get_object()
+        context = super().get_context_data(**kwargs)
+
+        post = Post.objects.filter(id=self.kwargs['pk'])[0]
+        comments = post.comment_set.all()
+
+        context['post'] = post
+        context['comments'] = comments
+        context['form'] = form
+
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            content = form.cleaned_data['content']
+
+            comment = Comment.objects.create(
+                name=name, content=content, post=post
+            )
+
+            form = CommentForm()
+            context['form'] = form
+            return self.render_to_response(context=context)
+
+        return self.render_to_response(context=context)
