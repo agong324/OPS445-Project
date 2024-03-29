@@ -59,8 +59,8 @@
         	<div class="row">
           		<div class="col-12">
 				{% load thumbnail %}
-				{% thumbnail item.image "100x100" crop="center" as im %}
-				<img class="rounded-circle mr-2" src="{% static 'img/defaultpfp.png' %}" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="Avatar">
+				{% thumbnail "guestpfp.PNG" "100x100" crop="center" as im %}
+				<img class="rounded-circle mr-2" src="{{ im.url }}"  width="{{ im.width }}" height="{{ im.height }}" alt="Avatar">
 				{% endthumbnail %}
             			<strong>{{ comment.name }}</strong> commented:
           </div>
