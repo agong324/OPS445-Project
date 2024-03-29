@@ -42,15 +42,26 @@
   {% if comments %}
   <div class="row mt-5">
   	<div class="col-lg-6 offset-lg-3">
-      		Comments{{ comments.count|pluralize }}
+      		Comment{{ comments.count|pluralize }}
       		<span class="badge badge-dark ml-2">{{ comments.count }}</span>
     	</div>
+	{% comment %}
+	 {% if post.author == request.user %}
+	<form action="{% url 'delete_comment' comment.id %}" method="post">
+	{% csrf_token %}
+	<button type="submit">Delete Comment</button>
+	    </form>
+	    {% endif %}
+	    {% endcomment %}
     {% for comment in comments %}
     <div class="col-lg-6 offset-lg-3 mt-2">
     	<div class="card p-2">
         	<div class="row">
           		<div class="col-12">
-            			<img class="rounded-circle mr-2" src="{% static 'img/avatar.svg' %}" alt="Avatar">
+				{% load thumbnail %}
+				{% thumbnail item.image "100x100" crop="center" as im %}
+				<img class="rounded-circle mr-2" src="{% static 'img/defaultpfp.png' %}" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="Avatar">
+				{% endthumbnail %}
             			<strong>{{ comment.name }}</strong> commented:
           </div>
           <div class="col-12">
