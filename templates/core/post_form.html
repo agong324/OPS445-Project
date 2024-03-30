@@ -1,5 +1,7 @@
 <!-- templates/core/post_form.html -->
 {% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'dark-mode.css' %}">
 
 {% block head_title %}{% if update %}Update post{% else %}Create a post{% endif %}{% endblock head_title %}
 

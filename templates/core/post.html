@@ -2,16 +2,16 @@
 {% extends 'base.html' %}
 
 {% load static %}
-
+<link rel="stylesheet" href="{% static 'dark-mode.css' %}">
 {% block head_title %}{{ post.title }}{% endblock %}
 
 {% block content %}
 
-<div class="container-fluid my-5">
+<div class="container-fluid my-5 custom-background">
     <div class="row">
-      <div class="col-lg-6 offset-lg-3">
+      <div class="col-lg-6 offset-lg-3 custom-background">
 
-	<div class="card">
+	<div class="card custom-post-background">
 	  <h2 class="card-title text-center my-3">{{ post.title }}</h2>
 	    <div class="text-muted text-center mb-3">
 		<div>
@@ -41,9 +41,9 @@
  <!-- Comment List -->
   {% if comments %}
   <div class="row mt-5">
-  	<div class="col-lg-6 offset-lg-3">
+  	<div class="col-lg-6 offset-lg-3 custom-input">
       		Comment{{ comments.count|pluralize }}
-      		<span class="badge badge-dark ml-2">{{ comments.count }}</span>
+      		<span class="badge badge-light ml-2">{{ comments.count }}</span>
     	</div>
 	{% comment %}
 	 {% if post.author == request.user %}
@@ -54,8 +54,8 @@
 	    {% endif %}
 	    {% endcomment %}
     {% for comment in comments %}
-    <div class="col-lg-6 offset-lg-3 mt-2">
-    	<div class="card p-2">
+    <div class="col-lg-6 offset-lg-3 mt-2 custom-post-background">
+    	<div class="card p-2 custom-post-background">
         	<div class="row">
           		<div class="col-12">
 				{% load thumbnail %}
@@ -75,14 +75,14 @@
   </div>
   {% endif %}
  <!-- Form to leave comment -->
-  <div class="row mt-5">
-  	<div class="col-lg-6 offset-lg-3">
+  <div class="row mt-5 custom-input">
+  	<div class="col-lg-6 offset-lg-3 custom-input">
       		<h3>Leave a comment</h3>
       		<form method='POST'>
         		{% csrf_token %}
-        		<div class="form-group">
-          			<span class="ml-2"></span>{{ form.name.label_tag }}
-          			<input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" id="id_name"
+        		<div class="form-group custom-input">
+          			<span class="ml-2 custom-input"></span>{{ form.name.label_tag }}
+          			<input type="text" class="form-control custom-input {% if form.name.errors %}is-invalid{% endif %}" id="id_name"
             				name="name" value="{{ form.name.value|default:'' }}">
         </div>
         <div class="form-group">
@@ -97,4 +97,3 @@
      </div>
 </div>
 {% endblock content %}
-

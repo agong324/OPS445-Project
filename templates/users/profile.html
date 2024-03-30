@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-
+<link rel="stylesheet" href="{% static 'dark-mde.css' %}">
 {% block head_title %}{{ user.username }} | Django Blog{% endblock head_title %}
 
 {% block content %}
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-6 custom-background" >
   <div class="row">
-    <div class="card col-lg-6 offset-lg-3 mb-3">
+    <div class="card col-lg-5 offset-lg-3 mb-3">
       <div class="row">
         {% if user.profile.image %}
         <img class="card-img-top col-sm-3 col-4 my-3" src="{{ profile.image.url }}" alt="{{ user.username }}">

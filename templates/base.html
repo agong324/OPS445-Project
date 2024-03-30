@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,10 +10,10 @@
 					           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
 			  <title>{% block head_title %}Welcome - OPS445 Blog{% endblock %}</title>
+			    <link rel="stylesheet" href="{% static 'dark-mode.css' %}">
 	</head>
 
 	<body>
-
 
 		  <h1>OPS445 Blog Project</h1>
 
@@ -27,7 +28,7 @@
 				      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 				          crossorigin="anonymous"></script>
 
-			    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+			    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 			    <div class="container">
 			        <a href="{% url 'core:home' %}" class="navbar-brand">OPS445 Django blog</a>
 				<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
