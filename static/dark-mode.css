@@ -30,3 +30,19 @@ input {
 .custom-input {
 	color: #E3E3E3;
 	}
+
+.default {
+	color: #000;
+}
+
+.profile-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.profile-circle {
+	width: 100px;
+	height: 180px;
+	overflow: hidden;
+	border-radius: 50%;

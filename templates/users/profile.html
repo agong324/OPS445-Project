@@ -1,26 +1,35 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'dark-mde.css' %}">
+<link rel="stylesheet" href="{% static 'dark-mode.css' %}">
 {% block head_title %}{{ user.username }} | Django Blog{% endblock head_title %}
 
 {% block content %}
-<div class="container-fluid mt-6 custom-background" >
+<div class="container-fluid mt-6 custom-post-background" >
   <div class="row">
-    <div class="card col-lg-5 offset-lg-3 mb-3">
+    <div class="card col-lg-5 offset-lg-3 mb-3 custom-post-background">
       <div class="row">
+	      <div class="row">
         {% if user.profile.image %}
-        <img class="card-img-top col-sm-3 col-4 my-3" src="{{ profile.image.url }}" alt="{{ user.username }}">
+	{% comment %}
+	{% thumbnail source="{{ profile.image.url }}" "100x100" crop="center" as im %}
+	<img src="{{ profile.image.url }}" width="{{ im.width }}" height="{{ im.height }}">
+	{% endthumbnail %} {% endcomment %}
+	<img class="card-img-top col-sm-4 col-4 my-4 profile-circle" src="{{ profile.image.url }}" alt="{{ user.username }}">
         {% else %}
-        <img class="card-img-top col-sm-3 col-4 my-3" src="{% static 'img/defaultpfp.png' %}" alt="{{ user.username }}">
+        <img class="card-img-top col-sm-4 col-4 my-4 profile-circle" src="{% static 'img/defaultpfp.png' %}" alt="{{ user.username }}">
         {% endif %}
         <div class="card-body col-9">
           <h2 class="card-title my-3">{{ user.username }}</h2>
           <p>Last login on: {{ user.last_login }}</p>
+	  <h5>About Me</h5>
           <p class="card-text">{{ user.profile.about_me }}</p>
         </div>
+	<div class="card-footer col-12">
 	<p><a href="{% url 'users:edit_profile' %}">Edit Profile</a></p>
-	<div class="card-body col-9"></div>
+	{#	<div class="card-body col-9"></div> #}
 	<p><a href="{% url 'users:password_change' %}">Change Password</a></p>
+	</div>
       </div>
     </div>
   </div>

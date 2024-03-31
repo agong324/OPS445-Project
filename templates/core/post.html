@@ -82,7 +82,7 @@
         		{% csrf_token %}
         		<div class="form-group custom-input">
           			<span class="ml-2 custom-input"></span>{{ form.name.label_tag }}
-          			<input type="text" class="form-control custom-input {% if form.name.errors %}is-invalid{% endif %}" id="id_name"
+          			<input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" id="id_name"
             				name="name" value="{{ form.name.value|default:'' }}">
         </div>
         <div class="form-group">
