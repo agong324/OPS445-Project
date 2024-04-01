@@ -2,6 +2,12 @@
 
 This will be hosted locally for demonstration purposes only. 
 
+## Prerequisites:
+- python virtual environment started
+- psycopg2-binary installed with database setup
+- provide the database credentials in opsblog/settings.py
+- all required libraries from requirements.txt have been installed
+
 ## To run the project:
 
 - adjust opsblog/settings.py to fit your URL requirement.
